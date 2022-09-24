@@ -15,7 +15,7 @@ URL = 'https://api.thecatapi.com/v1/images/search'
 def get_new_image():
     try:
         response = requests.get(URL).json()
-    except Exception:
+    except ConnectionError:
         new_url = 'https://api.thedogapi.com/v1/images/search'
         response = requests.get(new_url).json()
 
@@ -31,7 +31,7 @@ def new_cat(update, context):
 def wake_up(update, context):
     chat = update.effective_chat
     name = chat.first_name
-    button = ReplyKeyboardMarkup([['Новый котик']], resize_keyboard=True)
+    button = ReplyKeyboardMarkup([['/new_cat']], resize_keyboard=True)
     context.bot.send_message(
         chat_id=chat.id,
         text=f'Привет, {name}. Посмотри, какого котика я тебе нашёл',
